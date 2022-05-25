@@ -11,11 +11,11 @@ namespace SedentaryCountdown
         /// <summary>
         /// 倒计时分钟数
         /// </summary>
-        public double CountdownMinute { get; set; } = 60;
+        public double CountdownMinute { get; set; }
 
         /// <summary>
         /// 休息分钟数
         /// </summary>
-        public double RestMinute { get; set; } = 5;
+        public double RestMinute { get; set; }
     }
 }

@@ -57,7 +57,7 @@ namespace SedentaryCountdown
             DispatcherTimer dispatcherTimer = new DispatcherTimer();
             dispatcherTimer.Tick += new EventHandler((object sender, EventArgs e) =>
             {
-                if (restWindow != null && restWindow.IsActive)
+                if (restWindow != null && restWindow.IsLoaded)
                 {
                     dateTime = DateTime.Now;
                     return;
@@ -129,10 +129,8 @@ namespace SedentaryCountdown
         void CheckConfig()
         {
             if (Config == null) Config = new Config();
-            if (Config.CountdownMinute <= 0) Config.CountdownMinute = 60;//默认60分钟
-            if (Config.CountdownMinute < 1) Config.CountdownMinute = 1;//最少10分钟
-            if (Config.RestMinute <= 0) Config.RestMinute = 5;//默认5分钟
-            if (Config.RestMinute < 1) Config.RestMinute = 1;//最少1分钟
+            if (Config.CountdownMinute < 1) Config.CountdownMinute = 50;//最少1分钟，默认50分钟
+            if (Config.RestMinute < 1) Config.RestMinute = 10;//最少1分钟,默认10分钟
         }
     }
 }
