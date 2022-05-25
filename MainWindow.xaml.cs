@@ -32,10 +32,10 @@ namespace SedentaryCountdown
 
             Console.WriteLine();
             Console.WriteLine("== SedentaryCountdown ==");
-            //开启启动
-            try {
-                File.Copy(AppDomain.CurrentDomain.BaseDirectory+"SedentaryCountdownStarter.exe", @"C:\Users\chuliang.xu\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\SedentaryCountdownStarter.exe");
-            } catch (Exception e){ Console.WriteLine(e); }
+            ////开启启动
+            //try {
+            //    File.Copy(AppDomain.CurrentDomain.BaseDirectory+"SedentaryCountdownStarter.exe", @"C:\Users\chuliang.xu\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\SedentaryCountdownStarter.exe");
+            //} catch (Exception e){ Console.WriteLine(e); }
 
             //读取配置
             try
@@ -50,18 +50,24 @@ namespace SedentaryCountdown
                 }
             }
             catch (Exception) { }
-            if (Config == null) Config = new Config();
-            if (Config.TotalMinute <= 0) Config.TotalMinute = 60;
 
+            CheckConfig();
+
+            RestWindow restWindow = null;
             DispatcherTimer dispatcherTimer = new DispatcherTimer();
             dispatcherTimer.Tick += new EventHandler((object sender, EventArgs e) =>
             {
-                TimeSpan timeSpan = TimeSpan.FromMinutes(Config.TotalMinute) - (DateTime.Now - dateTime);
+                if (restWindow != null && restWindow.IsActive)
+                {
+                    dateTime = DateTime.Now;
+                    return;
+                }
+                TimeSpan timeSpan = TimeSpan.FromMinutes(Config.CountdownMinute) - (DateTime.Now - dateTime);
                 if (timeSpan.TotalSeconds <= 0)
                 {
-                    new RestWindow().Show();
+                    restWindow = new RestWindow(Config.RestMinute);
+                    restWindow.Show();
                     dateTime = DateTime.Now;
-                    //(sender as DispatcherTimer).Stop();
                 }
                 else
                 {
@@ -104,6 +110,8 @@ namespace SedentaryCountdown
         {
             new ConfigWindow(Config).ShowDialog();
 
+            CheckConfig();
+
             try
             {
                 string str = JsonSerializer.JsonSerialize<Config>(Config);
@@ -116,6 +124,15 @@ namespace SedentaryCountdown
                 }
             }
             catch (Exception) { }
+        }
+
+        void CheckConfig()
+        {
+            if (Config == null) Config = new Config();
+            if (Config.CountdownMinute <= 0) Config.CountdownMinute = 60;//默认60分钟
+            if (Config.CountdownMinute < 10) Config.CountdownMinute = 10;//最少10分钟
+            if (Config.RestMinute <= 0) Config.RestMinute = 5;//默认5分钟
+            if (Config.RestMinute < 0) Config.RestMinute = 1;//最少1分钟
         }
     }
 }

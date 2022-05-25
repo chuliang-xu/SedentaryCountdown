@@ -6,8 +6,9 @@
         xmlns:local="clr-namespace:SedentaryCountdown"
         mc:Ignorable="d" WindowStartupLocation="CenterScreen" MouseDoubleClick="Window_MouseDoubleClick"
         WindowStyle="None" Topmost="True" AllowsTransparency="True" Background="#01ffffff" ShowInTaskbar="False"
-        Title="RestWindow" Height="200" Width="1300">
-    <Grid>
-        <TextBlock x:Name="TxtCountdown" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="200" Foreground="Fuchsia" Text = "休息 休息一下"/>
-    </Grid>
+        Title="RestWindow" Height="500" Width="1920">
+    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="160" Foreground="Fuchsia" Text = "休息一下，不然会挂"/>
+        <TextBlock x:Name="TxtCountdown" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="120" Foreground="#40ff00ff" Text="00:00:00"/>
+    </StackPanel>
 </Window>

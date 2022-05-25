@@ -20,16 +20,26 @@ namespace SedentaryCountdown
     /// </summary>
     public partial class RestWindow : Window
     {
-        public RestWindow()
+
+        public RestWindow( double restMinute)
         {
             InitializeComponent();
 
+            DateTime dateTime = DateTime.Now;
             DispatcherTimer dispatcherTimer = new DispatcherTimer();
             dispatcherTimer.Tick += new EventHandler((object sender, EventArgs e) =>
             {
-                Close();
+                TimeSpan timeSpan = TimeSpan.FromMinutes(restMinute) - (DateTime.Now - dateTime);
+                if (timeSpan.TotalSeconds <= 0)
+                {
+                    Close();
+                }
+                else
+                {
+                    TxtCountdown.Text = $@"{timeSpan:hh\:mm\:ss}";
+                }
             });
-            dispatcherTimer.Interval = TimeSpan.FromSeconds(10);
+            dispatcherTimer.Interval = TimeSpan.FromSeconds(0.3);
             dispatcherTimer.Start();
         }
 
