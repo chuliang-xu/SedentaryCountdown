@@ -130,9 +130,9 @@ namespace SedentaryCountdown
         {
             if (Config == null) Config = new Config();
             if (Config.CountdownMinute <= 0) Config.CountdownMinute = 60;//默认60分钟
-            if (Config.CountdownMinute < 10) Config.CountdownMinute = 10;//最少10分钟
+            if (Config.CountdownMinute < 1) Config.CountdownMinute = 1;//最少10分钟
             if (Config.RestMinute <= 0) Config.RestMinute = 5;//默认5分钟
-            if (Config.RestMinute < 0) Config.RestMinute = 1;//最少1分钟
+            if (Config.RestMinute < 1) Config.RestMinute = 1;//最少1分钟
         }
     }
 }
